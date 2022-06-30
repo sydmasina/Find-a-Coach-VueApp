@@ -1,20 +1,20 @@
 <template>
-    <form >
+    <form @submit.prevent="submitForm">
      <div class="form-control">
         <label for="firstname">Firstname</label>
-        <input type="text" id="firstname">
+        <input type="text" id="firstname" v-model.trim="firtName">
      </div>
      <div class="form-control">
         <label for="lastname">Lastname</label>
-        <input type="text" id="lastname">
+        <input type="text" id="lastname" v-model.trim="lastName">
      </div>
      <div class="form-control">
         <label for="description">Description</label>
-        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        <textarea v-model.trim="description" name="description" id="description" cols="30" rows="10"></textarea>
      </div>
      <div class="form-control">
         <label for="rate">Hourly Rate ($)</label>
-        <input type="number" id="rate">
+        <input type="number" id="rate" v-model.number="rate">
      </div>
      <div class="form-control">
         <h3>Areas of Expertise</h3>
@@ -31,8 +31,35 @@
             <label for="career">Career Development</label>
         </div>
      </div>
+     <base-button>Register</base-button>
     </form>
 </template>
+
+<script>
+export default {
+    data(){
+        return{
+            firstName: '',
+            lastName: '',
+            description: '',
+            rate: null,
+            areas: [],
+        }
+    },
+    methods: {
+        submitForm(){
+            const formData = {
+                first: this.firstName,
+                last: this.lastName,
+                desc: this.description,
+                rate: this.rate,
+                areas: this.areas,
+            };
+            console.log(formData);
+        }
+    }
+}
+</script>
 
 <style scoped>
 .form-control {
