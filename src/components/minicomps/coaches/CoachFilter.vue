@@ -2,16 +2,16 @@
   <base-card>
     <h2>Find You Coach</h2>
     <span class="filter-option">
-      <input type="checkbox" id="fronted" checked @change="setFilter" />
+      <input type="checkbox" id="frontend" checked @change="setFilter" />
       <label for="frontend">Frontend</label>
     </span>
     <span class="filter-option">
-      <input type="checkbox" id="fronted" checked @change="setFilter" />
-      <label for="frontend">Backend</label>
+      <input type="checkbox" id="backend" checked @change="setFilter" />
+      <label for="backend">Backend</label>
     </span>
     <span class="filter-option">
-      <input type="checkbox" id="fronted" checked @change="setFilter" />
-      <label for="frontend">Career</label>
+      <input type="checkbox" id="career" checked @change="setFilter" />
+      <label for="career">Career</label>
     </span>
   </base-card>
 </template>
