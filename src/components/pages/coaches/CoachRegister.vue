@@ -1,5 +1,8 @@
 <template>
-  <h1>Coach Registration!</h1>
+  <section>
+    <h2>Register as a Coach now!</h2>
+    
+  </section>
 </template>
 
 <script>
