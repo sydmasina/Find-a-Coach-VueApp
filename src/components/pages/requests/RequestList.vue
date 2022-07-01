@@ -1,13 +1,53 @@
 <template>
-  <h1>Requests Lists</h1>
+  <section>
+    <base-card>
+      <header>
+        <h2>Requests Recieved</h2>
+      </header>
+      <ul v-if="hasRequests">
+        <request-item
+          v-for="request in recievedRequests"
+          :key="request.id"
+          :email="request.userEmail"
+          :message="request.message"
+        ></request-item>
+      </ul>
+      <h3 v-else>No requests Recieved Yet</h3>
+    </base-card>
+  </section>
 </template>
 
 <script>
-export default {
+import RequestItem from '../../minicomps/requests/RequestItem.vue';
 
-}
+export default {
+  components: {
+    RequestItem,
+  },
+  computed: {
+    recievedRequests() {
+      return this.$store.getters['requests/requests'];
+    },
+    hasRequests() {
+      return this.$store.getters['requests/hasRequests'];
+    },
+  },
+};
 </script>
 
-<style>
+<style scoped>
+header {
+  text-align: center;
+}
 
+ul {
+  list-style: none;
+  margin: 2rem auto;
+  padding: 0;
+  max-width: 30rem;
+}
+
+h3 {
+  text-align: center;
+}
 </style>
