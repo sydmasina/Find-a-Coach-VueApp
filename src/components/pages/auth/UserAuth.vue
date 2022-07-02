@@ -1,4 +1,12 @@
 <template>
+  <div>
+    <base-dialog :show="!!error" title="Opps, There is an ERROR!!!" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <base-dialog :show="isLoading" title="Authenticating.." fixed>
+      <base-spinner></base-spinner>
+    </base-dialog>
+  </div>
   <base-card>
     <form @submit.prevent="submitForm">
       <div class="form-control">
@@ -13,7 +21,9 @@
         Incorrect email or password. Check details and try again.
       </p>
       <base-button>{{ submitButtonCaption }}</base-button>
-      <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption}}</base-button>
+      <base-button type="button" mode="flat" @click="switchAuthMode">{{
+        switchModeButtonCaption
+      }}</base-button>
     </form>
   </base-card>
 </template>
@@ -26,26 +36,28 @@ export default {
       password: '',
       formIsValid: true,
       mode: 'login',
+      isLoading: false,
+      error: null,
     };
   },
   computed: {
-    submitButtonCaption(){
-        if(this.mode === 'login'){
-            return 'Login';
-        }else{
-            return 'Signup';
-        }
+    submitButtonCaption() {
+      if (this.mode === 'login') {
+        return 'Login';
+      } else {
+        return 'Signup';
+      }
     },
-    switchModeButtonCaption(){
-        if(this.mode === 'login'){
-            return 'Signup instead';
-        }else{
-            return 'Login instead';
-        }
+    switchModeButtonCaption() {
+      if (this.mode === 'login') {
+        return 'Signup instead';
+      } else {
+        return 'Login instead';
+      }
     },
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       this.formIsValid = true;
       if (
         this.email === '' ||
@@ -55,13 +67,20 @@ export default {
         this.formIsValid = false;
       }
 
-      if(this.mode === 'login'){
-        //..
-      }else{
-        this.$store.dispatch('signup', {
+      this.isLoading = true;
+      try {
+        if (this.mode === 'login') {
+          //..
+        } else {
+          await this.$store.dispatch('signup', {
             email: this.email,
             password: this.password,
-        });
+          });
+          this.isLoading = false;
+        }
+      } catch (err) {
+        this.error = err.message || 'Failed to signup or login';
+        this.isLoading = false;
       }
     },
     switchAuthMode() {
@@ -71,6 +90,9 @@ export default {
         this.mode = 'login';
       }
     },
+    handleError(){
+        this.error = null;
+    }
   },
 };
 </script>
