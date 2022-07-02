@@ -26,7 +26,7 @@ export default {
         });
     },
     async loadCoaches(context) {
-        const response = await fetch(`https://vue-first-backend-15415-default-rtdb.firebaseio.com/coaches.jso`);
+        const response = await fetch(`https://vue-first-backend-15415-default-rtdb.firebaseio.com/coaches.json`);
         const responseData = await response.json();
 
         if (!response.ok) {
