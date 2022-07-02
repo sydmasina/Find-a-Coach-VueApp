@@ -1,6 +1,10 @@
 <template>
   <div>
-    <base-dialog :show="!!error" title="Opps, There is an ERROR!!!" @close="handleError">
+    <base-dialog
+      :show="!!error"
+      title="Opps, There is an ERROR!!!"
+      @close="handleError"
+    >
       <p>{{ error }}</p>
     </base-dialog>
     <base-dialog :show="isLoading" title="Authenticating.." fixed>
@@ -70,7 +74,11 @@ export default {
       this.isLoading = true;
       try {
         if (this.mode === 'login') {
-          //..
+          await this.$store.dispatch('login', {
+            email: this.email,
+            password: this.password,
+          });
+          this.isLoading = false;
         } else {
           await this.$store.dispatch('signup', {
             email: this.email,
@@ -90,9 +98,9 @@ export default {
         this.mode = 'login';
       }
     },
-    handleError(){
-        this.error = null;
-    }
+    handleError() {
+      this.error = null;
+    },
   },
 };
 </script>
